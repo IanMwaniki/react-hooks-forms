@@ -1,68 +1,60 @@
-// import React, {useState} from "react";
-
-// function Form() {
-//   const [firstName, setFirstName] = useState("John");
-//   const [lastName, setLastName] = useState("Henry");
-
-// function handleFirstNameChange(event) {
-//   setFirstName(event.target.value);
-// }
-
-// function handleLastNameChange(event) {
-//   setLastName(event.target.value);
-// }
-
-//   return (
-//     <form>
-//       <input type="text" onChange={handleFirstNameChange} value={firstName} />
-//       <input type="text" onChange={handleLastNameChange} value={lastName} />
-//       <button type="submit">Submit</button>
-//     </form>
-//   );
-// }
-
-// export default Form;
 
 
-// import React, {useState} from "react";
+import React, { useState } from "react";
 
-// function Form() {
-//   const [newsletter, setNewsletter] = useState(false);
+function Form() {
+  const [firstName, setFirstName] = useState("John");
+  const [lastName, setLastName] = useState("Henry");
+  const [submittedData, setSubmittedData] = useState([]);
 
-//   function handleNewsletterChange(event) {
-//     // .checked, not .value!
-//     setNewsletter(event.target.checked);
-//   }
+  function handleFirstNameChange(event) {
+    setFirstName(event.target.value);
+  }
 
-//   return (
-//     <form>
-//       <label htmlFor="newsletter">Subscribe to our Newsletter?</label>
-//       <input type="checkbox" id="newsletter" onChange={handleNewsletterChange} checked={newsletter}/>
-//       <button type="submit">Submit</button>
-//     </form>
-//   )
-// }
+  function handleLastNameChange(event) {
+    setLastName(event.target.value);
+  }
 
-// export default Form;
+  function handleSubmit(event) {
+    event.preventDefault();
+    const formData = { firstName: firstName, lastName: lastName };
+    const dataArray = [...submittedData, formData];
+    setSubmittedData(dataArray);
+    setFirstName("");
+    setLastName("");
+  }
 
-import React from "react";
-
-function Form(props) {
+  const listOfSubmissions = submittedData.map((data, index) => {
+    return (
+      <div key={index}>
+        {data.firstName} {data.lastName}
+      </div>
+    );
+  });
   return (
-    <form>
-    <input
-      type="text"
-      onChange={props.handleFirstNameChange}
-      value={props.firstName}
-    />
-    <input
-      type="text"
-      onChange={props.handleLastNameChange}
-      value={props.lastName}
-    />
-    <button type="submit">Submit</button>
-  </form>
+    <div>
+      <form onSubmit={handleSubmit}>
+        <input type="text" onChange={handleFirstNameChange} value={firstName} />
+        <input type="text" onChange={handleLastNameChange} value={lastName} />
+        <button type="submit">Submit</button>
+      </form>
+      <h3>Submissions</h3>
+      {listOfSubmissions}
+    </div>
   );
 }
+
+//   return (
+//     <div>
+//       <form onSubmit={handleSubmit}>
+//         <input type="text" onChange={handleFirstNameChange} value={firstName} />
+//         <input type="text" onChange={handleLastNameChange} value={lastName} />
+//         <button type="submit">Submit</button>
+//       </form>
+//       <h3>Submissions</h3>
+//       {listOfSubmissions}
+//     </div>
+//   );
+// }
 
 export default Form;
